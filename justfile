@@ -72,3 +72,20 @@ configure:
 # Reconfigure from scratch
 [group: "configure"]
 reconfigure: clean configure
+
+# Build and run FFI test locally
+[group: "test"]
+test-ffi:
+    cmake -B build -S . -DCLAY_INCLUDE_ALL_EXAMPLES=OFF -DCLAY_INCLUDE_FFI_TEST=ON
+    cmake --build build
+    ./build/tests/ffi-test/clay_ffi_test
+
+# Run Rust unit tests
+[group: "test"]
+test-rust:
+    cd rust && cargo test
+
+# Clean Rust build artifacts
+[group: "clean"]
+clean-rust:
+    cd rust && cargo clean

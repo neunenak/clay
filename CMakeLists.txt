@@ -12,6 +12,7 @@ option(CLAY_INCLUDE_SDL3_EXAMPLES "Build SDL 3 examples" OFF)
 option(CLAY_INCLUDE_WIN32_GDI_EXAMPLES "Build Win32 GDI examples" OFF)
 option(CLAY_INCLUDE_SOKOL_EXAMPLES "Build Sokol examples" OFF)
 option(CLAY_INCLUDE_PLAYDATE_EXAMPLES "Build Playdate examples" OFF)
+option(CLAY_INCLUDE_FFI_TEST "Build Rust FFI test" OFF)
 
 message(STATUS "CLAY_INCLUDE_DEMOS: ${CLAY_INCLUDE_DEMOS}")
 
@@ -60,3 +61,22 @@ endif()
 
 #add_library(${PROJECT_NAME} INTERFACE)
 #target_include_directories(${PROJECT_NAME} INTERFACE .)
+
+# Rust FFI integration
+if(CLAY_INCLUDE_FFI_TEST)
+    include(FetchContent)
+
+    # Fetch Corrosion for Rust-CMake integration
+    FetchContent_Declare(
+        Corrosion
+        GIT_REPOSITORY https://github.com/corrosion-rs/corrosion.git
+        GIT_TAG v0.5.2
+        GIT_SHALLOW TRUE
+    )
+    FetchContent_MakeAvailable(Corrosion)
+
+    # Import the Rust crate
+    corrosion_import_crate(MANIFEST_PATH rust/Cargo.toml)
+
+    add_subdirectory("tests/ffi-test")
+endif()
