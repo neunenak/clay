@@ -2,6 +2,6 @@ services:
   gcc:
     build:
       context: ../
-      dockerfile: tests/gcc/9.4/Dockerfile
+      dockerfile: tests/gcc/Dockerfile
     volumes:
       - /tmp/clay/_deps
