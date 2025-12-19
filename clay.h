@@ -4359,11 +4359,7 @@ void Clay_SetDebugModeEnabled(bool enabled) {
     context->debugModeEnabled = enabled;
 }
 
-CLAY_WASM_EXPORT("Clay_IsDebugModeEnabled")
-bool Clay_IsDebugModeEnabled(void) {
-    Clay_Context* context = Clay_GetCurrentContext();
-    return context->debugModeEnabled;
-}
+// Clay_IsDebugModeEnabled is now implemented in Rust (rust/src/lib.rs)
 
 CLAY_WASM_EXPORT("Clay_SetCullingEnabled")
 void Clay_SetCullingEnabled(bool enabled) {
